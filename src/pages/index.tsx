@@ -1,13 +1,19 @@
-import { useState } from "react";
-import { Difficulty, ItemStatus } from "../common/board";
+import { useEffect, useState } from "react";
+import { BoardItem, Difficulty, ItemStatus } from "../common/board";
 import { getBoard } from "../common/pokemon";
 import Card from "../components/card";
 
 const Home = () => {
   const [difficulty, setDifficulty] = useState(Difficulty.EASY);
-  const [board, setBoard] = useState(getBoard(difficulty));
+  const [board, setBoard] = useState<Array<BoardItem>>([]);
   // -1 = not selected otherwise is a index of the board
   const [previousIndex, setPreviousIndex] = useState(-1);
+
+  useEffect(() => {
+    getBoard(difficulty)
+      .then((board) => setBoard(board))
+      .catch((err) => console.error("Failed to get a board...", err));
+  }, [difficulty, setBoard]);
 
   const handleClick = (index: number) => {
     // ensure user does not select same index
@@ -33,7 +39,7 @@ const Home = () => {
           previous.status = ItemStatus.NONE;
           setBoard([...board]);
           setPreviousIndex(-1);
-        }, 500);
+        }, 750);
       }
     }
   };

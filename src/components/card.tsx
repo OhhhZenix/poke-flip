@@ -1,6 +1,8 @@
 import Image from "next/image";
 import { BoardItem, ItemStatus } from "../common/board";
 
+const getServerSideProps = () => {};
+
 const Card = (props: {
   index: number;
   item: BoardItem;
@@ -8,16 +10,17 @@ const Card = (props: {
 }) => {
   return (
     <div className="gameCard" onClick={() => props.handleFn(props.index)}>
-      <div
-        className={
-          "cardImage " + (props.item.status !== ItemStatus.NONE ? "" : "hide")
-        }
-      >
+      <div className="cardImage">
         <Image
-          src={props.item.pokemon.image}
-          alt=""
+          src={
+            props.item.status === ItemStatus.NONE
+              ? "/pokecard.png"
+              : props.item.pokemon.image
+          }
+          alt={props.item.pokemon.name}
           width={"200%"}
           height={"200%"}
+          quality={"100%"}
         />
       </div>
     </div>
