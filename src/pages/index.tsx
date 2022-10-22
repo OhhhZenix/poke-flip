@@ -71,12 +71,14 @@ enum Difficulty {
 type BoardItem = {
   index: number;
   pokemon: Pokedex.Pokemon;
+  found: bool;
 };
 
 const Home = () => {
-  const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.MEDIUM);
+  const [difficulty, setDifficulty] = useState<Difficulty>(Difficulty.EASY);
   const [board, setBoard] = useState<Array<BoardItem>>([]);
-  const [selected, setSelected] = useState<Array<number>>([]);
+  const [selectedIndexes, setSelectedIndexes] = useState<Array<number>>([]);
+  const [timer, setTimer] = useState<Date>(new Date());
 
   useEffect(() => {
     const fetchAllPokemon = async () => {
@@ -87,7 +89,11 @@ const Home = () => {
         let id = pokemonIds[i];
         await P.getPokemonByName(id)
           .then((pokemon) =>
-            pokemons.push({ index: i, pokemon: pokemon as Pokedex.Pokemon })
+            pokemons.push({
+              index: i,
+              pokemon: pokemon as Pokedex.Pokemon,
+              found: false,
+            })
           )
           .catch((err) => console.error(`Could not fetch pokemon ${id}`, err));
       }
@@ -98,38 +104,44 @@ const Home = () => {
   }, [setBoard, difficulty]);
 
   return (
-    <div className={`gameBoard ${getBoardStyle(difficulty)}`}>
-      {board &&
-        board.map(({ index, pokemon }) => (
-          <div
-            key={Math.random()}
-            className="gameCard"
-            onClick={() => {
-              if (selected.length == 2) {
-                if (selected[0] == selected[1]) {
-                  let copy = [...board];
-                  copy.forEach((item) => {
-                    
-                  });
+    <div>
+      <h1>{timer.getTime() - Date.now()}</h1>
+      <div className={`gameBoard ${getBoardStyle(difficulty)}`}>
+        {board &&
+          board.map(({ index, pokemon, found }) => (
+            <div
+              key={Math.random()}
+              className="gameCard"
+              onClick={() => {
+                if (selectedIndexes.includes(index)) return;
+                if (selectedIndexes.length == 2) {
+                  console.log(selectedIndexes);
+                  let item1 = board[selectedIndexes[0]];
+                  let item2 = board[selectedIndexes[1]];
+                  console.log(item1.pokemon.id, item2.pokemon.id);
+                  if (item1.pokemon.id == item2.pokemon.id) {
+                    item1.found = true;
+                    item2.found = true;
+                  }
+                  setSelectedIndexes([]);
+                } else {
+                  setSelectedIndexes([index, ...selectedIndexes]);
                 }
-                setSelected([]);
-              } else {
-                setSelected([index, ...selected]);
-              }
-            }}
-          >
-            <Image
-              src={
-                selected?.includes(index)
-                  ? `https://cdn.traction.one/pokedex/pokemon/${pokemon.id}.png`
-                  : "/pokecard.png"
-              }
-              alt={pokemon.name}
-              layout="fill"
-              objectFit="contain"
-            />
-          </div>
-        ))}
+              }}
+            >
+              <Image
+                src={
+                  selectedIndexes?.includes(index) || found
+                    ? `https://cdn.traction.one/pokedex/pokemon/${pokemon.id}.png`
+                    : "/pokecard.png"
+                }
+                alt={pokemon.name}
+                layout="fill"
+                objectFit="contain"
+              />
+            </div>
+          ))}
+      </div>
     </div>
   );
 };
