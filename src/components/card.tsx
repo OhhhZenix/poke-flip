@@ -1,8 +1,6 @@
 import Image from "next/image";
 import { BoardItem, ItemStatus } from "../common/board";
 
-const getServerSideProps = () => {};
-
 const Card = (props: {
   index: number;
   item: BoardItem;

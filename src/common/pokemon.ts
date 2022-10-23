@@ -12,7 +12,7 @@ export const getBoard = async (difficulty: Difficulty) => {
     pokemonIds.push(getRandomPokemon());
   }
   // make duplicates
-  pokemonIds = pokemonIds.concat([...pokemonIds]);
+  pokemonIds = [...pokemonIds, ...pokemonIds];
   // shuffle the ids
   pokemonIds = pokemonIds.sort(() => Math.random() - 0.5);
 
