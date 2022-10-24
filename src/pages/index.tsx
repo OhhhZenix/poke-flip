@@ -4,7 +4,7 @@ import { getBoard } from "../common/pokemon";
 import Card from "../components/card";
 
 const Home = () => {
-  const [difficulty, setDifficulty] = useState(Difficulty.EASY);
+  const [difficulty, setDifficulty] = useState(Difficulty.HARD);
   const [board, setBoard] = useState<Array<BoardItem>>([]);
   const [selectedOne, setSelectedOne] = useState(-1);
   const [selectedTwo, setSelectedTwo] = useState(-1);
@@ -51,10 +51,21 @@ const Home = () => {
     setBoard([...board]);
   };
 
+  const getBoardClass = (difficulty: Difficulty) => {
+    switch (difficulty) {
+      case Difficulty.EASY:
+        return "easyBoard";
+      case Difficulty.MEDIUM:
+        return "mediumBoard";
+      case Difficulty.HARD:
+        return "hardBoard";
+    }
+  };
+
   return (
     <div>
       <h1>PokeFlip</h1>
-      <div className={`gameBoard easyBoard`}>
+      <div className={`gameBoard ${getBoardClass(difficulty)}`}>
         {board.map((item, i) => {
           return <Card key={i} index={i} item={item} handleFn={handleClick} />;
         })}
