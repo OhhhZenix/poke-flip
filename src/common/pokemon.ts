@@ -1,8 +1,9 @@
 import { BoardItem, Difficulty, getBoardSize, ItemStatus } from "./board";
 
 const getRandomPokemon = () => {
-  // there are 905 pokemons
-  return Math.floor(Math.random() * 905) + 1;
+  // generates pokemon from 1-898 pokedex
+  // Limited currently due to the api only having images up to 898th pokemon
+  return Math.floor(Math.random() * 898) + 1;
 };
 
 export const getBoard = async (difficulty: Difficulty) => {

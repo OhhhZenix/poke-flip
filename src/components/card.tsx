@@ -8,18 +8,25 @@ const Card = (props: {
 }) => {
   return (
     <div className="gameCard" onClick={() => props.handleFn(props.index)}>
-      <div className="cardImage">
-        <Image
-          src={
-            props.item.status === ItemStatus.NONE
-              ? "/pokecard.png"
-              : props.item.pokemon.image
-          }
-          alt={props.item.pokemon.name}
-          width={"200%"}
-          height={"200%"}
-          quality={"100%"}
-        />
+      <div className={props.item.status === ItemStatus.NONE ? "" : "flipped"}>
+        <div className="cardImage front">
+          <Image
+            src={props.item.pokemon.image}
+            alt={props.item.pokemon.name}
+            width={"200%"}
+            height={"200%"}
+            quality={"100%"}
+          />
+        </div>
+        <div className="back">
+          <Image
+            src="/pokecard.png"
+            alt={props.item.pokemon.name}
+            width={"200%"}
+            height={"200%"}
+            quality={"100%"}
+          />
+        </div>
       </div>
     </div>
   );

@@ -2,16 +2,15 @@ body {
   background-image: url(https://wallpaperaccess.com/full/1089608.png);
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .gameBoard {
-  width: 90vmin;
-  height: 90vh;
   display: grid;
   gap: 10px;
+  width: 80vmin;
+  height: 80vh;
+  margin: auto;
+  padding: 10px;
 }
 
 .easyBoard {
@@ -32,17 +31,32 @@ body {
 .gameCard {
   background-color: white;
   border-radius: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  overflow: hidden;
+  position: relative;
 }
 
 .cardImage {
-  width: 80%;
-  height: 80%;
-  border-radius: 5px;
+  width: 100%;
+  display: block;
 }
 
-.cardImage.hide {
-  visibility: hidden;
+.gameCard .front {
+  transform: rotateY(90deg);
+  transition: all ease-in 0.2s;
+  position: absolute;
+}
+
+.flipped .front {
+  transform: rotateY(0deg);
+  transition-delay: 0.2s;
+}
+
+.gameCard .back {
+  transition: all ease-in 0.2s;
+  transition-delay: 0.2s;
+}
+
+.flipped .back {
+  transform: rotateY(90deg);
+  transition-delay: 0s;
 }

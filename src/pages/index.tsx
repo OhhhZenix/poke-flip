@@ -4,17 +4,18 @@ import { getBoard } from "../common/pokemon";
 import Card from "../components/card";
 
 const Home = () => {
-  const [difficulty, setDifficulty] = useState(Difficulty.HARD);
+  const [difficulty, setDifficulty] = useState(Difficulty.MEDIUM);
   const [board, setBoard] = useState<Array<BoardItem>>([]);
   const [selectedOne, setSelectedOne] = useState(-1);
   const [selectedTwo, setSelectedTwo] = useState(-1);
+  const [timer, setTimer] = useState(Date.now());
 
   // sets up the board
   useEffect(() => {
     getBoard(difficulty)
       .then((board) => setBoard(board))
       .catch((err) => console.error("Failed to get a board...", err));
-  }, [difficulty, setBoard]);
+  }, [difficulty]);
 
   // checks if two selected items are a match
   useEffect(() => {
@@ -63,8 +64,8 @@ const Home = () => {
   };
 
   return (
-    <div>
-      <h1>PokeFlip</h1>
+    <div className="game">
+      <h1>Hello </h1>
       <div className={`gameBoard ${getBoardClass(difficulty)}`}>
         {board.map((item, i) => {
           return <Card key={i} index={i} item={item} handleFn={handleClick} />;
