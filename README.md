@@ -3,6 +3,6 @@ A simple memory card flip game, with a twist. The twist  is that it is pokemon t
 
 ## Technologies
 * Typescript
-* NextJS (React)
+* [NextJS](https://nextjs.org/) (React)
 * CSS (Vanilla)
-* PokeAPI
+* [PokeAPI](https://pokeapi.co/)
