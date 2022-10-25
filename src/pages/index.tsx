@@ -118,7 +118,7 @@ const Home = () => {
           <h1 className="name">PokeFlip</h1>
         </div>
         <div className="options">
-          <div className="records">Records</div>
+          <div className="records">Records (Soon...)</div>
           <div
             className="newGame"
             onClick={async () => {
