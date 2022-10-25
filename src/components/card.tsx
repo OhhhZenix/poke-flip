@@ -22,9 +22,8 @@ const Card = (props: {
           <Image
             src="/pokecard.png"
             alt={props.item.pokemon.name}
-            width={"200%"}
-            height={"200%"}
-            quality={"100%"}
+            layout="fill"
+            objectFit="cover"
           />
         </div>
       </div>

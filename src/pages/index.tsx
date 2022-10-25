@@ -1,10 +1,12 @@
+import Head from "next/head";
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import { BoardItem, Difficulty, ItemStatus } from "../common/board";
 import { getBoard } from "../common/pokemon";
 import Card from "../components/card";
 
 const Home = () => {
-  const [difficulty, setDifficulty] = useState(Difficulty.MEDIUM);
+  const [difficulty, setDifficulty] = useState(Difficulty.EASY);
   const [board, setBoard] = useState<Array<BoardItem>>([]);
   const [selectedOne, setSelectedOne] = useState(-1);
   const [selectedTwo, setSelectedTwo] = useState(-1);
@@ -64,14 +66,52 @@ const Home = () => {
   };
 
   return (
-    <div className="game">
-      <h1>Hello </h1>
-      <div className={`gameBoard ${getBoardClass(difficulty)}`}>
-        {board.map((item, i) => {
-          return <Card key={i} index={i} item={item} handleFn={handleClick} />;
-        })}
-      </div>
-    </div>
+    <>
+      <Head>
+        <title>PokeFlip</title>
+        <link rel="shortcut icon" href="/pokeball.png" type="image/x-icon" />
+      </Head>
+
+      <header>
+        <div className="brand">
+          <div className="logo">
+            <Image
+              src="/pokeball.png"
+              alt="logo"
+              layout="fill"
+              objectFit="cover"
+            />
+          </div>
+          <h1 className="name">PokeFlip</h1>
+        </div>
+        <div className="options"></div>
+      </header>
+      <main>
+        <div className={`gameBoard ${getBoardClass(difficulty)}`}>
+          {board.map((item, i) => {
+            return (
+              <Card key={i} index={i} item={item} handleFn={handleClick} />
+            );
+          })}
+        </div>
+      </main>
+      <footer>
+        <a
+          href="https://github.com/OhhhZenix/poke-flip"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Github
+        </a>
+        <a
+          href="https://twitter.com/OhhhZenix"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Twitter
+        </a>
+      </footer>
+    </>
   );
 };
 
