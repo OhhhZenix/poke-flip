@@ -24,6 +24,7 @@ header {
 .brand {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 .logo {
@@ -40,6 +41,42 @@ header {
 .options {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
+  gap: 5px 5px;
+  padding-right: 5px;
+}
+
+.records,
+.newGame,
+.difficulty {
+  padding-top: 2px;
+  padding-bottom: 2px;
+  padding-left: 4px;
+  padding-right: 4px;
+  border-radius: 5px;
+}
+
+.records:hover,
+.newGame:hover {
+  background-color: rgb(237, 233, 233);
+}
+
+.easyDifficulty:hover {
+  background-color: green;
+}
+
+.mediumDifficulty:hover {
+  background-color: yellow;
+}
+
+.hardDifficulty:hover {
+  background-color: red;
+}
+
+.records:hover,
+.newGame:hover,
+.difficulty:hover {
+  cursor: pointer;
 }
 
 main {

@@ -54,6 +54,39 @@ const Home = () => {
     setBoard([...board]);
   };
 
+  const getDifficultyClass = (difficulty: Difficulty) => {
+    switch (difficulty) {
+      case Difficulty.EASY:
+        return "easyDifficulty";
+      case Difficulty.MEDIUM:
+        return "mediumDifficulty";
+      case Difficulty.HARD:
+        return "hardDifficulty";
+    }
+  };
+
+  const difficultyToString = (difficulty: Difficulty) => {
+    switch (difficulty) {
+      case Difficulty.EASY:
+        return "Easy";
+      case Difficulty.MEDIUM:
+        return "Medium";
+      case Difficulty.HARD:
+        return "Hard";
+    }
+  };
+
+  const getNextDifficulty = (current: Difficulty) => {
+    switch (current) {
+      case Difficulty.EASY:
+        return Difficulty.MEDIUM;
+      case Difficulty.MEDIUM:
+        return Difficulty.HARD;
+      case Difficulty.HARD:
+        return Difficulty.EASY;
+    }
+  };
+
   const getBoardClass = (difficulty: Difficulty) => {
     switch (difficulty) {
       case Difficulty.EASY:
@@ -84,7 +117,42 @@ const Home = () => {
           </div>
           <h1 className="name">PokeFlip</h1>
         </div>
-        <div className="options"></div>
+        <div className="options">
+          <div className="records">Records</div>
+          <div
+            className="newGame"
+            onClick={async () => {
+              let newBoard = await getBoard(difficulty);
+              for (const item of board) {
+                item.status = ItemStatus.FOUND;
+                setBoard([...board]);
+              }
+              setTimeout(() => {
+                for (const item of board) {
+                  item.status = ItemStatus.NONE;
+                  setBoard([...board]);
+                }
+                setTimeout(() => {
+                  setBoard(newBoard);
+                }, 500);
+              }, 1500);
+              setSelectedOne(-1);
+              setSelectedTwo(-1);
+            }}
+          >
+            New Game
+          </div>
+          <div
+            className={`difficulty ${getDifficultyClass(difficulty)}`}
+            onClick={() => {
+              setDifficulty(getNextDifficulty(difficulty));
+              setSelectedOne(-1);
+              setSelectedTwo(-1);
+            }}
+          >
+            {difficultyToString(difficulty)}
+          </div>
+        </div>
       </header>
       <main>
         <div className={`gameBoard ${getBoardClass(difficulty)}`}>
