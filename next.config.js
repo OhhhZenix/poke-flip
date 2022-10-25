@@ -7,8 +7,7 @@ const nextConfig = {
     path: "",
     domains: ["raw.githubusercontent.com"],
   },
-  basePath: "/nextjs-pages",
-  assetPrefix: "/nextjs-pages",
+  assetPrefix: "./",
 };
 
 module.exports = nextConfig;
