@@ -76,7 +76,7 @@ export default component$(() => {
           alt="PokeFlip Logo"
           width={48}
           height={48}
-          class="p-2 cursor-pointer p-2"
+          class="cursor-pointer p-2"
         />
 
         <li class="flex flex-wrap gap-2 p-2">
