@@ -1,3 +1,7 @@
 {
-  "cSpell.words": ["pokeball", "pokecard", "Pokedex", "Pokemons"]
+  "css.lint.unknownAtRules": "ignore",
+  "cSpell.words": [
+    "pokeball",
+    "qwik"
+  ],
 }
