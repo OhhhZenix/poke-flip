@@ -1,4 +1,4 @@
-import { component$ } from "@builder.io/qwik";
+import { Resource, component$, useResource$ } from "@builder.io/qwik";
 import type { DocumentHead } from "@builder.io/qwik-city";
 
 const generatePokemon = () => {
@@ -24,7 +24,46 @@ const generateBoard = (boardSize: number) => {
   return board;
 };
 
-export default component$(async () => {
+const PokemonCard = component$((props: { pokemonId: number }) => {
+  const data = useResource$<any>(
+    async () =>
+      await fetch(`https://pokeapi.co/api/v2/pokemon/${props.pokemonId}`)
+        .then(async (res) => {
+          if (!res.ok) {
+            switch (res.status) {
+              case 400:
+                break;
+              case 401:
+                break;
+              case 404:
+                break;
+              case 500:
+                break;
+            }
+          }
+          return res.json();
+        })
+        .catch((err) => console.error("Something went wrong...", err))
+  );
+
+  return (
+    <Resource
+      value={data}
+      onResolved={(pokemon) => (
+        <ul class="bg-gray-200 rounded">
+          <img
+            src={pokemon.sprites.front_default}
+            alt={pokemon.name}
+            width={200}
+            height={200}
+          />
+        </ul>
+      )}
+    ></Resource>
+  );
+});
+
+export default component$(() => {
   const board = generateBoard(4);
 
   console.log(board);
@@ -55,37 +94,8 @@ export default component$(async () => {
 
       <div class="flex justify-center items-center flex-grow">
         <li class="grid grid-cols-4 items-center gap-2">
-          {board.map(async (pokemon) => {
-            const data = await fetch(
-              `https://pokeapi.co/api/v2/pokemon/${pokemon}`
-            )
-              .then((res) => {
-                if (!res.ok) {
-                  switch (res.status) {
-                    case 400:
-                      break;
-                    case 401:
-                      break;
-                    case 404:
-                      break;
-                    case 500:
-                      break;
-                  }
-                }
-                return res.json();
-              })
-              .catch((err) => console.error("Something went wrong...", err));
-
-            return (
-              <ul key={Math.random()} class="bg-gray-200 rounded">
-                <img
-                  src={data.sprites.front_default}
-                  alt={data.name}
-                  width={"100%"}
-                  height={"100%"}
-                />
-              </ul>
-            );
+          {board.map(async (pokemon, i) => {
+            return <PokemonCard key={i} pokemonId={pokemon} />;
           })}
         </li>
       </div>
